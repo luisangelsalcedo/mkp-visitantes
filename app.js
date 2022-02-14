@@ -1,11 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 
-mongoose.connect(
-  process.env.MONGODB_URL ||
-    "mongodb+srv://admin:4dm1n@products.bnrj3.mongodb.net/visitor",
-  { useNewUrlParser: true }
-);
+mongoose.connect(process.env.MONGODB_URL, { useNewUrlParser: true });
 
 mongoose.connection.on("error", e => {
   console.log("Error: ", e);
@@ -22,13 +18,10 @@ const Visitor = mongoose.model("Visitor", schemaVisitor);
 const app = express();
 
 app.get("/", async (req, res) => {
-  const { name } = req.query;
-  const nombre = !name ? "Anónimo" : name;
-
   try {
     const visitor = new Visitor({
       date: new Date(),
-      name: nombre,
+      name: req.query || "Anónimo",
     });
 
     const newVisitor = await visitor.save();
