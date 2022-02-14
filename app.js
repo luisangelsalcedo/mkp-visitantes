@@ -18,10 +18,13 @@ const Visitor = mongoose.model("Visitor", schemaVisitor);
 const app = express();
 
 app.get("/", async (req, res) => {
+  const { name } = req.query;
+  const nombre = !name ? "Anónimo" : name;
+
   try {
     const visitor = new Visitor({
       date: new Date(),
-      name: req.query || "Anónimo",
+      name: nombre,
     });
 
     const newVisitor = await visitor.save();
