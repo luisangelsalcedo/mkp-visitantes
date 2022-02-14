@@ -17,7 +17,7 @@ const schemaVisitor = {
   name: String,
 };
 
-const Visitor = mongoose.model("Visitor", schemaVisitor, "Visitor");
+const Visitor = mongoose.model("Visitor", schemaVisitor);
 
 const app = express();
 
