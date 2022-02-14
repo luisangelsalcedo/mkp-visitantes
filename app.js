@@ -35,7 +35,7 @@ app.get("/", async (req, res) => {
     newVisitor &&
       res.status(200).send(`<h1>El visitante fue almacenado con éxito</h1>`);
   } catch (error) {
-    res.status(500).json({ error });
+    res.status(500).send();
   }
 });
 
