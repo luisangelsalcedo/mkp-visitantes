@@ -25,14 +25,18 @@ app.get("/", async (req, res) => {
   const { name } = req.query;
   const nombre = !name ? "Anónimo" : name;
 
-  const visitor = new Visitor({
-    date: new Date(),
-    name: nombre,
-  });
+  try {
+    const visitor = new Visitor({
+      date: new Date(),
+      name: nombre,
+    });
 
-  const newVisitor = await visitor.save();
-  newVisitor &&
-    res.status(200).send(`<h1>El visitante fue almacenado con éxito</h1>`);
+    const newVisitor = await visitor.save();
+    newVisitor &&
+      res.status(200).send(`<h1>El visitante fue almacenado con éxito</h1>`);
+  } catch (error) {
+    res.status(500).json({ error });
+  }
 });
 
 app.listen("3000", () => {
