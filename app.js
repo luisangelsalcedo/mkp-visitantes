@@ -11,28 +11,33 @@ mongoose.connection.on("error", e => {
 const schemaVisitor = {
   date: Date,
   name: String,
+  count: Number,
 };
 
 const Visitor = mongoose.model("Visitor", schemaVisitor);
 
 const app = express();
+app.set("view engine", "ejs");
 
 app.get("/", async (req, res) => {
   const { name } = req.query;
   const nombre = !name ? "Anónimo" : name;
 
-  try {
+  const visita = await Visitor.findOne({ name: nombre });
+
+  if (!!visita && visita.name !== "Anónimo") {
+    await Visitor.updateOne(visita, { count: visita.count + 1 });
+  } else {
     const visitor = new Visitor({
       date: new Date(),
       name: nombre,
+      count: 1,
     });
 
     const newVisitor = await visitor.save();
-    newVisitor &&
-      res.status(200).send(`<h1>El visitante fue almacenado con éxito</h1>`);
-  } catch (error) {
-    res.status(500).send();
   }
+  const visitantes = await Visitor.find();
+  await res.render("index.ejs", { visitantes: visitantes });
 });
 
 app.listen("3000", () => {
