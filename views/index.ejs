@@ -4,22 +4,26 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Visitantes recurrentes</title>
   </head>
   <body>
     <table>
-      <tr>
-        <th>Id</th>
-        <th>Name</th>
-        <th>Visits</th>
-      </tr>
-      <% for(let i = 0; i < visitantes.length; i++){ %>
-      <tr>
-        <td><%= visitantes[i]._id %></td>
-        <td><%= visitantes[i].name %></td>
-        <td><%= visitantes[i].count %></td>
-      </tr>
-      <% } %>
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Name</th>
+          <th>Visits</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% for(let i = 0; i < visitantes.length; i++){ %>
+        <tr>
+          <td><%= visitantes[i]._id %></td>
+          <td><%= visitantes[i].name %></td>
+          <td><%= visitantes[i].count %></td>
+        </tr>
+        <% } %>
+      </tbody>
     </table>
   </body>
 </html>
